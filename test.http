@@ -9,4 +9,12 @@ Content-Type: application/json
   "password": "123456"
 }
 
+### login ok
+POST http://localhost:8080/api/login
+Accept: application/json
+Content-Type: application/json
 
+{
+  "email": "fajar@gmail.com",
+  "password": "123456"
+}

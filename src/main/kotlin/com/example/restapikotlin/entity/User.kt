@@ -20,6 +20,9 @@ data class User(
 
         val password : String,
 
+        @Column(nullable = true)
+        var token : String? = null,
+
         @Column(name = "created_at")
         val createdAt : Date,
 
