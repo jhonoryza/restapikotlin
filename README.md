@@ -6,5 +6,13 @@
 
 ## API
 
-you can check test.http file for list api endpoint
+- [x] api register
+- [x] api login
+- [x] api logout `private`
+- [ ] api crud categories @Auth `private`
+- [ ] api crud posts @Auth `private`
+- [ ] api list posts
+- [ ] api detail posts
+- [ ] api list categories
 
+check `test.http` file for more detail
