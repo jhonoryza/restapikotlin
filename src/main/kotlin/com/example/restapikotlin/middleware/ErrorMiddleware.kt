@@ -1,5 +1,6 @@
 package com.example.restapikotlin.middleware
 
+import com.example.restapikotlin.error.InvalidTokenException
 import com.example.restapikotlin.error.LoginException
 import com.example.restapikotlin.error.RegisteredUserException
 import com.example.restapikotlin.response.ApiResponse
@@ -35,6 +36,15 @@ class ErrorMiddleware {
             code = 400,
             message = "BAD REQUEST",
             data = "invalid credentials"
+        )
+    }
+
+    @ExceptionHandler(InvalidTokenException::class)
+    fun invalidTokenExceptionHandler(e: Exception): ApiResponse<String> {
+        return ApiResponse(
+            code = 401,
+            message = "UNAUTHORIZED",
+            data = e.message ?: ""
         )
     }
 }

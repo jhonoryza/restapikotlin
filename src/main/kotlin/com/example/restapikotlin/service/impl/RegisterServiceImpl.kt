@@ -6,8 +6,8 @@ import com.example.restapikotlin.repository.UserRepository
 import com.example.restapikotlin.request.RegisterRequest
 import com.example.restapikotlin.response.RegisterResponse
 import com.example.restapikotlin.service.RegisterService
+import com.example.restapikotlin.util.BCrypt
 import com.example.restapikotlin.util.ValidatorUtil
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -21,13 +21,11 @@ class RegisterServiceImpl(
 
         // validation logic
         validatorUtil.validate(registerRequest)
-        val registeredUser = userRepository.findByEmail(registerRequest.email)
-        if (registeredUser != null) {
+        if(userRepository.findFirstByEmail(registerRequest.email) != null) {
             throw RegisteredUserException()
         }
 
-        val encoder = BCryptPasswordEncoder(4)
-        val password = encoder.encode(registerRequest.password)
+        val password = BCrypt.hashpw(registerRequest.password, BCrypt.gensalt())
 
         // create user logic
         val user = User(

@@ -5,7 +5,7 @@ import com.example.restapikotlin.repository.UserRepository
 import com.example.restapikotlin.request.LoginRequest
 import com.example.restapikotlin.response.LoginResponse
 import com.example.restapikotlin.service.LoginService
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import com.example.restapikotlin.util.BCrypt
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -16,11 +16,10 @@ class LoginServiceImpl(
     override fun login(loginRequest: LoginRequest): LoginResponse {
 
         //check user exists
-        val user = userRepository.findByEmail(loginRequest.email) ?: throw LoginException()
+        val user = userRepository.findFirstByEmail(loginRequest.email) ?: throw LoginException()
 
         //check user password
-        val encoder = BCryptPasswordEncoder(4)
-        if (!encoder.matches(loginRequest.password, user.password)) throw LoginException()
+        if (!BCrypt.checkpw(loginRequest.password, user.password)) throw LoginException()
 
         //generate token
         val token = UUID.randomUUID().toString()

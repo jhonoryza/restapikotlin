@@ -18,3 +18,9 @@ Content-Type: application/json
   "email": "fajar@gmail.com",
   "password": "123456"
 }
+
+### logout ok
+POST http://localhost:8080/api/logout
+Accept: application/json
+Content-Type: application/json
+Authorization: ab201423-e4a9-43b1-981b-199da8053b34
